@@ -1,0 +1,36 @@
+{
+  "name": "test-blog",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run lint && nodemon src/server/launcher/index.js -x babel-node",
+    "build-server": "babel src/server -d dist_server",
+    "serve": "npm run build-server && node dist_server/launcher/index",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-eslint": "^10.0.3",
+    "eslint": "5.16.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^5.2.3",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.39.3"
+  }
+}
