@@ -1,19 +1,19 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import indexRouter from './routes';
-import usersRouter from './routes/users';
+import rooteBootstrap from './routes';
+import middlewareLoader from './middlewares';
+import db from './models/db';
 
 let app = express();
-let test = [1, 2, 3, 4];
-test.includes(1);
+
+//启动动态路由配置
+rooteBootstrap(app);
+middlewareLoader(app);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 app.use(cookieParser());
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 module.exports = app;
