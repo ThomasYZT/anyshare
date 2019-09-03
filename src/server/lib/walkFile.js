@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import os from 'os'
+import os from 'os';
 /**
  *  文件、目录遍历器
  *  @param {string} root 要遍历的根路径
@@ -48,14 +48,15 @@ const targetfileHandler = (dirent, root, reg, callback) => {
 
 const targetFolderHandler = (dirent, root, targetFolder, callback) => {
     let filePath = path.resolve(root, dirent.name);
-    if (new RegExp(targetFolder, 'i').test(filePath)) {
+    let pathSeparator = /win/.test(os.platform()) && !/darwin/.test(os.platform())  ? '\\\\' : '/';
+    if (new RegExp(`${targetFolder}${pathSeparator}`, 'i').test(filePath)) {
         callback ? callback(filePath) : defaultHandler(dirent, root);
     }
 };
 
 const mixHandler = (dirent, root, targetFolder, reg, callback) => {
     let filePath = path.resolve(root, dirent.name);
-    let pathSeparator = /win/.test(os.platform()) ? '\\\\' : '/';
+    let pathSeparator = /win/.test(os.platform()) && !/darwin/.test(os.platform())  ? '\\\\' : '/';
     if (new RegExp(`${targetFolder}${pathSeparator}`, 'i').test(filePath) && reg.test(dirent.name)) {
         callback ? callback(filePath) : defaultHandler(dirent, root);
     }

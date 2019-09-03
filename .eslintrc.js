@@ -140,7 +140,7 @@ module.exports = {
         "rest-spread-spacing": [1, "never"], // 规定展开运算符与它的表达式间不要留空白。
         "handle-callback-err": [1, "^(err|error)$" ], // 规定函数里面的异常信息不要忘记处理。
         "no-empty-pattern": 1, // 规定不要解构空值。
-        "no-throw-literal": 1, // 规定用throw 抛错时，抛出 Error 对象而不是字符串。
+        "no-throw-literal": 1, // 规定用throw 抛错时，抛出 error 对象而不是字符串。
 
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 1 : 0,
