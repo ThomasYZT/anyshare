@@ -14,9 +14,9 @@ export default (options) => {
         let userInfo = jwt.verifyToken(token, {
             name : 'yzt',
             password : '12'
-        })
-        console.log(userInfo)
-    }, 1000)
+        });
+        console.log(userInfo);
+    }, 1000);
 
     return (req, res, next) => {
         next();

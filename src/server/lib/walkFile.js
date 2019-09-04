@@ -48,7 +48,7 @@ const targetfileHandler = (dirent, root, reg, callback) => {
 
 const targetFolderHandler = (dirent, root, targetFolder, callback) => {
     let filePath = path.resolve(root, dirent.name);
-    let pathSeparator = /win/.test(os.platform()) && !/darwin/.test(os.platform())  ? '\\\\' : '/';
+    let pathSeparator = /win/.test(os.platform()) && !/darwin/.test(os.platform()) ? '\\\\' : '/';
     if (new RegExp(`${targetFolder}${pathSeparator}`, 'i').test(filePath)) {
         callback ? callback(filePath) : defaultHandler(dirent, root);
     }
@@ -56,7 +56,7 @@ const targetFolderHandler = (dirent, root, targetFolder, callback) => {
 
 const mixHandler = (dirent, root, targetFolder, reg, callback) => {
     let filePath = path.resolve(root, dirent.name);
-    let pathSeparator = /win/.test(os.platform()) && !/darwin/.test(os.platform())  ? '\\\\' : '/';
+    let pathSeparator = /win/.test(os.platform()) && !/darwin/.test(os.platform()) ? '\\\\' : '/';
     if (new RegExp(`${targetFolder}${pathSeparator}`, 'i').test(filePath) && reg.test(dirent.name)) {
         callback ? callback(filePath) : defaultHandler(dirent, root);
     }

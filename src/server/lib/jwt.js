@@ -21,7 +21,7 @@ export default {
      */
     verifyToken (token) {
         let cert = fs.readFileSync(path.join(__dirname, '../pem/rsapublickey.pem'));
-        let res
+        let res;
         try {
             res = jwt.verify(token, cert);
         } catch (err) {

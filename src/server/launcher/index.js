@@ -1,5 +1,5 @@
-/**!
- * app luncher
+/**
+ * 服务启动器
  */
 let app = require('../app');
 let debug = require('debug')('test-blog:server');
