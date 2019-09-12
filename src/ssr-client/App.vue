@@ -3,7 +3,7 @@
   组件名称：vue root 组件
 -->
 <template>
-
+    <router-view class="view"></router-view>
 </template>
 
 <script>

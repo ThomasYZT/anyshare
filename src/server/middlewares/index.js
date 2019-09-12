@@ -5,7 +5,7 @@ import { walkFile } from '../lib/walkFile';
  * @param {object} app
  * @return {undefined}
  */
-const middlewareLoader = (app) => {
+const middlewareMount = (app) => {
     const appRoot = process.cwd();
     const root = path.resolve(appRoot, 'src/server');
     const reg = new RegExp('(.*)middleware.js$', 'i');
@@ -16,10 +16,11 @@ const middlewareLoader = (app) => {
         reg : reg,
         callback : (route) => {
             import(route).then(({ default : defaultModule }) => {
-                app.use(defaultModule());
+                let config = defaultModule();
+                app.use(config.path ? config.path : '/', config['middleware']);
             });
         }
     });
 };
 
-export default middlewareLoader;
+export default middlewareMount;

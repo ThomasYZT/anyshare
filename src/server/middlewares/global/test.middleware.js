@@ -5,7 +5,9 @@
  */
 export default (options) => {
     console.log('test middleware has been loaded');
-    return (req, res, next) => {
-        next();
+    return {
+        middleware : (req, res, next) => {
+            next();
+        }
     };
 };

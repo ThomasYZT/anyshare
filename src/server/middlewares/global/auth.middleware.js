@@ -18,7 +18,9 @@ export default (options) => {
         console.log(userInfo);
     }, 1000);
 
-    return (req, res, next) => {
-        next();
+    return {
+        middleware : (req, res, next) => {
+            next();
+        }
     };
 };

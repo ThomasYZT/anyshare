@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "npm run lint && nodemon src/server/launcher/index.js -x babel-node",
+    "dev": "cross-env NODE_ENV=development npm run lint && nodemon src/server/launcher/index.js -x babel-node",
+    "serve": "cross-env NODE_ENV=production npm run build-server && node dist_server/launcher/index",
     "build-server": "babel src/server -d dist_server",
-    "serve": "npm run build-server && node dist_server/launcher/index",
-    "ssr-build": "rimraf dist_ssr && npm run ssr-build:client && npm run ssr-build:server",
-    "ssr-build:client": "cross-env NODE_ENV=production webpack --config src/ssr-client/build/webpack.client.config.babel.js --progress --hide-modules",
-    "ssr-build:server": "cross-env NODE_ENV=production webpack --config src/ssr-client/build/webpack.server.config.babel.js --progress --hide-modules",
+    "build-ssr": "rimraf dist_ssr && npm run ssr-build:client && npm run ssr-build:server",
+    "ssr-build:client": "cross-env NODE_ENV=production webpack --config src/ssr-client/build/webpack.client.config.babel.js --mode production --progress --hide-modules",
+    "ssr-build:server": "cross-env NODE_ENV=production webpack --config src/ssr-client/build/webpack.server.config.babel.js --mode production --progress --hide-modules",
     "lint": "eslint . --fix"
   },
   "dependencies": {

@@ -42,6 +42,7 @@ export const walkFile = ({ root = '', targetFolder = '', reg = null, type = 'fil
 const targetfileHandler = (dirent, root, reg, callback) => {
     let filePath = path.resolve(root, dirent.name);
     if (reg.test(dirent.name)) {
+        console.log(filePath);
         callback ? callback(filePath) : defaultHandler(dirent, root);
     }
 };
