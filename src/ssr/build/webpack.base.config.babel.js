@@ -3,6 +3,8 @@ import webpack from 'webpack';
 import { VueLoaderPlugin } from 'vue-loader';
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import vueLoaderConfig from './vue-loader.config';
+import utils from './utils';
 
 const isProd = process.env.NODE_ENV === 'production';
 export default {
@@ -20,14 +22,11 @@ export default {
     module : {
         noParse : /es6-promise\.js$/, // avoid webpack shimming process
         rules : [
+            ...utils.styleLoaders({ sourceMap : !isProd }),
             {
                 test : /\.vue$/,
                 loader : 'vue-loader',
-                options : {
-                    compilerOptions : {
-                        preserveWhitespace : false
-                    }
-                }
+                options : vueLoaderConfig
             },
             {
                 test : /\.js$/,

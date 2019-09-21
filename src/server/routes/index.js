@@ -12,6 +12,7 @@ const routerBootsstrap = (app) => {
         callback : (route) => {
             import(route).then(({ default : defaultModule }) => {
                 app.use(defaultModule);
+                console.log(route + ' has been loaded');
             });
         }
     });

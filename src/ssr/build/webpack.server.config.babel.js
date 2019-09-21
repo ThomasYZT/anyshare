@@ -3,7 +3,8 @@ import path from 'path';
 import baseConfig from './webpack.base.config.babel';
 import nodeExternals from 'webpack-node-externals';
 import VueSSRServerPlugin from 'vue-server-renderer/server-plugin';
-
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 export default merge(baseConfig, {
     // 将 entry 指向应用程序的 server entry 文件
     entry : path.resolve(__dirname, '../entry-server.js'),
@@ -42,6 +43,19 @@ export default merge(baseConfig, {
         // 这是将服务器的整个输出
         // 构建为单个 JSON 文件的插件。
         // 默认文件名为 `vue-ssr-server-bundle.json`
-        new VueSSRServerPlugin()
+        new VueSSRServerPlugin(),
+        new HtmlWebpackPlugin({
+            filename : 'templates/index.common.html',
+            template : 'src/ssr/templates/index.common.html',
+            inject : false
+        }),
+        // 拷贝静态资源到输出目录
+        new CopyWebpackPlugin([
+            {
+                from : path.resolve(__dirname, '../static'),
+                to : 'static',
+                ignore : ['.*']
+            }
+        ])
     ]
 });

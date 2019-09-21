@@ -1,23 +1,28 @@
 import express from 'express';
-import path from 'path';
 import fs from 'fs';
-import LRU from 'lru-cache';
+import { resolve } from '../../lib/toolKit';
 import { createBundleRenderer } from 'vue-server-renderer';
+import microCache from 'route-cache';
+
 let router = express.Router();
+let renderer = createRenderer();
 
-const templatePath = path.resolve(__dirname, '../../../ssr-client/templates/index.common.html');
-const template = fs.readFileSync(templatePath, 'utf-8');
-const bundle = require(path.resolve(__dirname, '../../../../dist_ssr/vue-ssr-server-bundle.json'));
-const clientManifest = require(path.resolve(__dirname, '../../../../dist_ssr/vue-ssr-client-manifest.json'));
+router.use(microCache.cacheSeconds(1, req => req.originalUrl));
+router.get(/^((?!api).)*$/, render);
 
-let renderer = createRenderer(bundle, {
-    template,
-    clientManifest
-});
+export default router;
 
-function createRenderer (bundle, options) {
-    // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-    return createBundleRenderer(bundle, Object.assign(options, {
+/**
+ * 执行服务端渲染包
+ * @return {object}
+ */
+function createRenderer () {
+    const config = getRenderConfig();
+
+    return createBundleRenderer(config.serverBundle, Object.assign({
+        template : config.template,
+        clientManifest : config.clientManifest
+    }, {
         // for component caching
         /*cache : new LRU({
             max : 1000,
@@ -30,8 +35,29 @@ function createRenderer (bundle, options) {
     }));
 }
 
+/**
+ * 获取渲染参数
+ * @return {object}
+ */
+function getRenderConfig () {
+    const templatePath = resolve('../../../dist_ssr/templates/index.common.html');
+    const serverBundle = require(resolve('../../../dist_ssr/vue-ssr-server-bundle.json'));
+    const clientManifest = require(resolve('../../../dist_ssr/vue-ssr-client-manifest.json'));
+
+    return {
+        serverBundle : serverBundle,
+        clientManifest : clientManifest,
+        template : fs.readFileSync(templatePath, 'utf-8')
+    };
+}
+
+/**
+ * 渲染函数
+ * @param {object} req
+ * @param {object} res
+ * @return {undefined}
+ */
 function render (req, res) {
-    console.log('1111111111111');
     res.setHeader('Content-Type', 'text/html');
 
     const handleError = err => {
@@ -59,8 +85,3 @@ function render (req, res) {
         res.send(html);
     });
 }
-/* GET users listing. */
-router.get(/^((?!api).)*$/, render);
-console.log('page route has been boot');
-
-export default router;

@@ -20,6 +20,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-
+<style lang="scss" scoped>
+.box {
+    font-size: 24px;
+}
 </style>
